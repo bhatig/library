@@ -1,0 +1,67 @@
+<%= form_for(@author) do |f| %>
+  <% if @author.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@author.errors.count, "error") %> prohibited this author from being saved:</h2>
+
+      <ul>
+      <% @author.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <table>
+      <thead>
+      </thead>
+      <tbody>
+        <tr>
+          <td><%= f.label :name, "Name" %></td>
+          <td><%= f.text_field :name %></td>
+        </tr>
+        <tr>
+          <td><%= f.label :mobile_no, "Mobile _No" %></td>
+          <td><%= f.text_field :mobile_no %></td>
+        </tr>
+        <tr>
+          <td><%= f.label :email, "Email" %></td>
+          <td><%= f.email_field :email %></td>
+        </tr>
+        <%= f.fields_for :addresses do |address_form| %>
+          <tr>
+            <td>
+              <%= address_form.label :city, "City" %>
+            </td>
+            <td>
+              <%= address_form.text_field :city %>
+            </td> 
+              
+          </tr>
+          <tr>
+            <td>
+              <%= address_form.label :state, "State" %>
+            </td>
+            <td>
+              <%= address_form.text_field :state %>
+            </td> 
+              
+          </tr>
+          <tr>
+            <td>
+              <%= address_form.label :country, "Country" %>
+            </td>
+            <td>
+              <%= address_form.text_field :country %>
+            </td> 
+              
+          </tr>        
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

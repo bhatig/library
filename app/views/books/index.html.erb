@@ -1,0 +1,58 @@
+<div style="text-align: right;"><%= link_to "Back", :back  %></div>
+<%if can? :manage, Book %>
+<h3><%= link_to 'New Book', new_book_path %></h3>
+<% end %>
+<%= form_tag  books_search_book_path, method: :get do %>
+<table>
+  <thead>
+    <tr>
+      <thead>
+        <th>Title</th>
+        <th>Author</th>
+      </thead>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><%= text_field_tag :title %></td>
+      <td><%= collection_select(:book, :author_id, Author.all, :id, :name, :include_blank => "Nothing selected") %></td>
+      <td colspan="2"><%= submit_tag 'search' %></td>
+    </tr>
+  </tbody>
+
+</table>
+<% end %>
+<br>
+<table>
+  <thead>
+    <tr>
+      <th colspan="3"><h1>Listing Books</h1></th>
+    </tr>
+    <tr>
+      <th>Title</th>
+      <th>Edition</th>
+      <th>Author</th>
+      <th>Status</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @books.each do |book| %>
+      <tr>
+        <td class="resource_data"><%= book.title %></td>
+        <td class="resource_data"><%= book.edition %></td>
+        <td class="resource_data"><%= book.author.name %></td>
+        <td class="resource_data"><%= book.status %></td>
+        <td class="resource_data">
+         <%= link_to_if (book.status != 'issued'), "request", borrows_path(:user_id => current_user, :book_id => book), method: :post , :onclick => 'alert("request send")'%>
+        </td>
+        <div>
+          <% if can? :manage, Book %>
+          <td class="link_data"><%= link_to 'Edit', edit_book_path(book) %></td>
+          <td class="link_data"><%= link_to 'Destroy', book, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <% end %>
+        </div>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

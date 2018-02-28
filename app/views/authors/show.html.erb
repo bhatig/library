@@ -1,0 +1,30 @@
+<table>
+  <thead>
+    <tr>
+      <th>name</th>
+      <th>mobile no</th>
+      <th>email</th>
+      <th>city</th>
+      <th>state</th>
+      <th>country</th>
+    </tr>
+  </thead>
+
+  <tbody>
+   
+      <tr >
+        <td class="resource_data"><%= @author.name %></td>
+        <td class="resource_data"><%= @author.mobile_no %></td>
+        <td class="resource_data"><%= @author.email %></td>
+        <td class="resource_data"><%= @author.addresses.first.city%></td>
+        <td class="resource_data"><%= @author.addresses.first.state%></td>  
+        <td class="resource_data"><%= @author.addresses.first.country%></td>
+        <td class="link_data"><%= link_to 'Edit', edit_author_path(@author) %></td>
+        <td class="link_data"><%= link_to 'Destroy', @author, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+  </tbody>
+</table>
+<br>
+<br>
+
+<%= link_to 'Back', authors_path %>
