@@ -57,4 +57,4 @@ gem 'elasticsearch', git: 'git://github.com/elasticsearch/elasticsearch-ruby.git
 gem 'elasticsearch-model', github: 'elastic/elasticsearch-rails'
 gem 'elasticsearch-rails', github: 'elastic/elasticsearch-rails'
 gem 'searchkick'
-
+gem 'bootstrap-datepicker-rails'

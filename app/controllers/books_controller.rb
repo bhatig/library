@@ -71,7 +71,6 @@ class BooksController < ApplicationController
     elsif  params[:title].empty? and  ! params[:book][:author_id].empty?
          @books = Book.where(:author_id => params[:book][:author_id])
     elsif  !params[:title].empty? and ! params[:book][:author_id].empty?
-      byebug
       @books = Book.where(:author_id => params[:book][:author_id]) & Book.search(params[:title], fields: [:title] )
     else
       @books = Book.search("*")

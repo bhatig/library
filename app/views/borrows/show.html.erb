@@ -1,11 +1,9 @@
-<div style="text-align: right;"><%= link_to "Back", :back  %></div>
-
-<br>
-<table>
+<div style="text-align: right;", class="btn"><%= link_to "Back", :back  %></div>
+<div class="well well-sm">
+  <h4>Calculate fine</h4>
+</div>
+<table class="table table-hover">
   <thead>
-    <tr>
-      <th colspan="3"><h1>Calculate fine</h1></th>
-    </tr>
     <tr>
       <th>Book Title</th>
       <th>User</th>
@@ -17,13 +15,17 @@
   </thead>
   <tbody>
       <tr id="user_listing">
-        <td class="resource_data"><%= @borrow.book_id %></td>
-        <td class="resource_data"><%= @borrow.user_id %></td>
+        <td class="resource_data"><%= Book.find(@borrow.book_id).title %></td>
+        <td class="resource_data"><%= User.find(@borrow.user_id).name %></td>
         <td class="resource_data"><%= @borrow.issue_date %></td>
         <td class="resource_data"><%= @borrow.due_date %></td>
         <td class="resource_data"><%= @borrow.return_date %></td>
         <td class="resource_data"><%= @borrow.fine%></td>       
-        <td colspan="4"><%= link_to 'ok', borrow_path(@borrow), method: :delete %></td>
+        <td colspan="4">
+          <div class="btn btn-primary">
+            <%= link_to 'ok', borrows_path %>
+          </div>
+        </td>
       </tr>
    </tbody>
 </table>

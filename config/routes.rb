@@ -2,6 +2,7 @@ Rails.application.routes.draw do
 
   get 'books/search_book'
   get 'borrows/return_book'
+  get 'borrows/issue_book'
   resources :borrows
   resources :books
   resources :authors do

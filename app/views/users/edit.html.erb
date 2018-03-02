@@ -1,6 +1,6 @@
-<div style="text-align: right;"><%= link_to "Back", :back %></div>
+<div style="text-align: right;", class="btn"><%= link_to "Back", :back %></div>
 <%= form_for(@user, url: user_path(@user)) do |f| %>
-    <table class="table">
+    <table class="table table-hover">
       <thead>
       </thead>
       <tbody>
@@ -68,5 +68,7 @@
         <% end %>
       </tbody>
     </table>    
-  <%= f.submit "Update" %>
+  <div class="btn">
+    <%= f.submit "Update" %>
+  </div>
 <%end%>

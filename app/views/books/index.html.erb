@@ -1,32 +1,35 @@
-<div style="text-align: right;"><%= link_to "Back", :back  %></div>
+<div class="btn", style="text-align: right;"><%= link_to "Back", :back  %></div>
 <%if can? :manage, Book %>
-<h3><%= link_to 'New Book', new_book_path %></h3>
+  <div class="well well-sm">
+    <h4><%= link_to 'New Book', new_book_path %></h4>
+  </div>
 <% end %>
 <%= form_tag  books_search_book_path, method: :get do %>
-<table>
-  <thead>
-    <tr>
-      <thead>
-        <th>Title</th>
-        <th>Author</th>
-      </thead>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><%= text_field_tag :title %></td>
-      <td><%= collection_select(:book, :author_id, Author.all, :id, :name, :include_blank => "Nothing selected") %></td>
-      <td colspan="2"><%= submit_tag 'search' %></td>
-    </tr>
-  </tbody>
-
-</table>
+  <div >
+  <table class="jumbotron ">
+    <thead>
+      <tr>
+        <thead>
+          <th>Title</th>
+          <th>Author</th>
+        </thead>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><%= text_field_tag :title %></td>
+        <td><%= collection_select(:book, :author_id, Author.all, :id, :name, :include_blank => "Nothing selected") %></td>
+        <td colspan="2"><%= submit_tag 'search' %></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
 <% end %>
 <br>
-<table>
+<table class="table table-hover">
   <thead>
     <tr>
-      <th colspan="3"><h1>Listing Books</h1></th>
+      <th colspan="3"> <h4>Listing Books</h4></th>
     </tr>
     <tr>
       <th>Title</th>
@@ -44,18 +47,38 @@
         <td class="resource_data"><%= book.author.name %></td>
         <td class="resource_data"><%= book.status %></td>
         <td class="resource_data">
-         <%= link_to_if (book.status != 'issued'), "request", borrows_path(:user_id => current_user, :book_id => book), method: :post , :onclick => 'alert("request send")'%>
+        <% if book.status != 'issued' %>
+          <% if Borrow.where(book_id: book.id, user_id: current_user.id).empty? %>
+          <div class="btn btn-primary">
+           <%= link_to "send request", borrows_path(:user_id => current_user, :book_id => book), method: :post %>
+           </div>
+          <% else %>
+          <div class=" btn btn-info">
+            <%= link_to "requested", ".", :onclick => 'alert("you have already requested")' %>
+          </div>
+          <% end %>
+        <% else %>
+        <div class="btn btn-success">
+          <%= link_to_if false, "request accepted", "."%>
+        </div>
+        <% end %>
         </td>
         <div>
           <% if can? :manage, Book %>
-          <td class="link_data"><%= link_to 'Edit', edit_book_path(book) %></td>
-          <td class="link_data"><%= link_to 'Destroy', book, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-        <% end %>
+            <td class="link_data">
+              <div class="btn btn-primary">
+              <%= link_to 'Edit', edit_book_path(book) %>
+              </div>
+            </td>
+            <td class="link_data">
+              <div class="btn btn-danger">
+                <%= link_to 'Destroy', book, method: :delete, data: { confirm: 'Are you sure?' } %>
+              </div>
+            </td>
+
+          <% end %>
         </div>
       </tr>
     <% end %>
   </tbody>
 </table>
-
-
-<%#= test%>

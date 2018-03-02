@@ -1,0 +1,51 @@
+<div style="text-align: right;", class="btn"><%= link_to "Back", :back  %></div>
+
+<%= form_for(@borrow, url: borrow_path(@borrow)) do |f| %>
+  <br>
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th>Book Title</th>
+        <th>User name</th>
+        <th>issue date</th>
+        <th>due date</th>
+        <% if can? :manage, current_user %>
+          <%if !@borrow.issue_date.nil? %>
+            <th>return date</th>
+          <%end%>
+        <%end%>
+      </tr>
+    </thead>
+    <tbody>
+      <tr id="user_listing">
+        <td class="resource_data"><%= Book.find(@borrow.book_id).title %></td>
+        <td class="resource_data"><%= User.find(@borrow.user_id).name %></td>
+        <td class="resource_data">
+          <%if @borrow.issue_date.nil? %>
+
+            <%= f.text_field :issue_date, "data-provide" => 'datepicker',"data-date-format" => "dd/mm/yyyy" %>
+
+          <% else %>
+            <%= @borrow.issue_date %>
+          <% end %>
+        </td>
+        <td class="resource_data">
+          <%if @borrow.due_date.nil? %>
+            <%= f.text_field :due_date, "data-provide" => 'datepicker', "data-date-format" => "dd/mm/yyyy" %>
+          <% else %>
+            <%= @borrow.due_date %>
+          <% end %>
+        </td>
+        <% if can? :manage, current_user %>
+          <%if !@borrow.issue_date.nil? %>
+            <td class="resource_data"><%= f.text_field :return_date, "data-provide" => 'datepicker', "data-date-format" => "dd/mm/yyyy" %></td>
+          <% end %>
+        <% end %>
+      </tr>
+    </tbody>
+  </table>
+  <br>
+  <div class="btn ">
+    <%= f.submit "submit" %>
+  </div>
+<% end %>
